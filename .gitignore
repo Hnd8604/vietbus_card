@@ -1,0 +1,19 @@
+target/
+*.class
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Simulated card images (jcardsim persistent runtime)
+cards/
+
+# Secrets
+*.p12
+*.jks
+.env
+
+# Oracle Java Card SDK binary (proprietary, not redistributed) - see README.md
+lib/api_classic.jar

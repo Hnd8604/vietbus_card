@@ -1,0 +1,16 @@
+# Local development database. Credentials are for local use only.
+services:
+  postgres:
+    image: postgres:16
+    container_name: buscard-db
+    environment:
+      POSTGRES_DB: buscard
+      POSTGRES_USER: buscard
+      POSTGRES_PASSWORD: ${BUSCARD_DB_PASSWORD:-buscard_dev}
+    ports:
+      - "5432:5432"
+    volumes:
+      - buscard-pgdata:/var/lib/postgresql/data
+
+volumes:
+  buscard-pgdata:

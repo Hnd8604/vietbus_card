@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.buscard</groupId>
+        <artifactId>buscard-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>card-applet</artifactId>
+    <name>Bus Card - Java Card applet</name>
+
+    <properties>
+        <!-- Applet code must stay inside the Java Card subset; target the oldest release JDK 21 can emit. -->
+        <maven.compiler.release>8</maven.compiler.release>
+    </properties>
+
+    <dependencies>
+        <!-- Java Card 3.0.5 classic API (Oracle SDK, copied into lib/). Compile only: jcardsim provides the runtime. -->
+        <dependency>
+            <groupId>oracle.javacard</groupId>
+            <artifactId>api_classic</artifactId>
+            <version>3.0.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../lib/api_classic.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.licel</groupId>
+            <artifactId>jcardsim</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.buscard</groupId>
+            <artifactId>common</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <executions>
+                    <!-- Tests are host-side code (javax.smartcardio, records): compile them with Java 21. -->
+                    <execution>
+                        <id>default-testCompile</id>
+                        <configuration>
+                            <release>21</release>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <!-- Oracle's stub API classes must not shadow jcardsim's simulated javacard.* classes. -->
+                    <classpathDependencyExcludes>
+                        <classpathDependencyExclude>oracle.javacard:api_classic</classpathDependencyExclude>
+                    </classpathDependencyExcludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
