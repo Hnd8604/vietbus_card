@@ -67,6 +67,8 @@
                     <classpathDependencyExcludes>
                         <classpathDependencyExclude>oracle.javacard:api_classic</classpathDependencyExclude>
                     </classpathDependencyExcludes>
+                    <!-- jcardsim's Kryo persistence reflects into JDK internals (e.g. SecureRandom) on Java 21. -->
+                    <argLine>--add-opens java.base/java.security=ALL-UNNAMED --add-opens java.base/java.math=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED</argLine>
                 </configuration>
             </plugin>
         </plugins>
