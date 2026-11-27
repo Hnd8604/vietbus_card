@@ -7,8 +7,14 @@ target/
 .project
 .settings/
 
-# Simulated card images (jcardsim persistent runtime)
+# Simulated card images (jcardsim persistent runtime) & offline queues
 cards/
+
+# Local embedded H2 database files
+data/
+*.mv.db
+*.lock.db
+*.trace.db
 
 # Secrets
 *.p12

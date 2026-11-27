@@ -25,6 +25,7 @@
             <version>3.0.5</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/../lib/api_classic.jar</systemPath>
+            <optional>true</optional>
         </dependency>
 
         <dependency>
